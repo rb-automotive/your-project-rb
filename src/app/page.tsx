@@ -1,8 +1,8 @@
 // --- File: src/app/page.tsx (Homepage) ---
 import React from 'react';
-// Import components using RELATIVE paths
-import Button from '../components/Button'; // Using relative path
-import ImageWithFallback from '../components/ImageWithFallback'; // Using relative path
+// Import components using relative paths (or revert to @/ if alias issue is fixed)
+import Button from '../components/Button';
+import ImageWithFallback from '../components/ImageWithFallback';
 // Import other components/sections if needed
 
 // --- Constants ---
@@ -68,7 +68,8 @@ export default function HomePage() {
       <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-4 text-center">
               <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900 font-roboto-slab">Our Core Services</h2>
-              <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">From emergency repairs to routine maintenance, we've got you covered.</p>
+              {/* Fixed apostrophe in the line below */}
+              <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">From emergency repairs to routine maintenance, we&apos;ve got you covered.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                   <div className="text-center p-4 transition-transform hover:scale-105">
                       <IconWrench className={`mx-auto h-10 w-10 text-${BRAND_COLOR}-600 mb-3`} />

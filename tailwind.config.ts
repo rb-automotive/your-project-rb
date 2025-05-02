@@ -32,17 +32,17 @@ const config: Config = {
       },
       // Define colors using CSS variables set in globals.css
       colors: {
-        border: "hsl(var(--border))",
+        border: "hsl(var(--border))", // Correct syntax using CSS variable
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "hsl(var(--primary))", // Correct syntax using CSS variable
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "hsl(var(--secondary))", // Correct syntax using CSS variable
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -92,3 +92,4 @@ const config: Config = {
   ],
 };
 export default config;
+

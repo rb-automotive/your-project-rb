@@ -1,4 +1,6 @@
 // --- File: src/components/ImageWithFallback.tsx ---
+"use client"; // <--- ADD THIS DIRECTIVE AT THE VERY TOP
+
 import React, { useState, useEffect } from 'react';
 
 interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -19,6 +21,7 @@ const ImageWithFallback = ({
   className = '',
   ...props
 }: ImageWithFallbackProps) => {
+    // useState and useEffect are now allowed because of "use client"
     const [imgSrc, setImgSrc] = useState(src);
     // Define placeholder URL generation
     const placeholderUrl = `https://placehold.co/${width}x${height}/e0e0e0/a0a0a0?text=${fallbackText.replace(/\s+/g, '+')}`;

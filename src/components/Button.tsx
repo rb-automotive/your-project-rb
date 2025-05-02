@@ -1,6 +1,6 @@
 // --- File: src/components/Button.tsx ---
 import React from 'react';
-import Link from 'next/link'; // Import Next.js Link
+import Link from 'next/link';
 
 // Define Button Props
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,25 +8,23 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
   size?: 'default' | 'sm' | 'lg';
   className?: string;
-  href?: string; // For link buttons
-  asChild?: boolean; // For wrapping custom components with Link styles
+  href?: string;
+  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ children, onClick, variant = 'primary', size = 'default', className = '', href, type = 'button', asChild = false, ...props }, ref) => {
-    const BRAND_COLOR = 'red'; // Define brand color centrally if possible
+    const BRAND_COLOR = 'red';
     const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background whitespace-nowrap";
 
-    // Define styles for different variants based on your globals.css variables
     const variants = {
-        primary: `bg-${BRAND_COLOR}-600 text-white hover:bg-${BRAND_COLOR}-700/90`, // Uses --primary HSL from globals.css via Tailwind JIT
-        secondary: `bg-gray-700 text-white hover:bg-gray-800/90`, // Uses gray (can be mapped to --secondary)
+        primary: `bg-${BRAND_COLOR}-600 text-white hover:bg-${BRAND_COLOR}-700/90`,
+        secondary: `bg-gray-700 text-white hover:bg-gray-800/90`,
         outline: `border border-${BRAND_COLOR}-500 bg-transparent hover:bg-${BRAND_COLOR}-100/50 text-${BRAND_COLOR}-600`,
         ghost: `hover:bg-${BRAND_COLOR}-100/50 hover:text-${BRAND_COLOR}-700 text-${BRAND_COLOR}-600`,
         link: `text-${BRAND_COLOR}-600 underline-offset-4 hover:underline`,
     };
 
-    // Define styles for different sizes
     const sizes = {
         default: "h-10 py-2 px-4",
         sm: "h-9 px-3 rounded-md",
@@ -35,18 +33,18 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     const combinedClassName = `${baseStyle} ${variants[variant]} ${sizes[size]} ${className}`;
 
-    // If href is provided for internal navigation, use Next.js Link
     if (href && href.startsWith('/')) {
-      // Use legacyBehavior={asChild} to pass props down correctly if wrapping another component
       return (
         <Link href={href} passHref legacyBehavior={asChild}>
           {asChild ? (
             React.cloneElement(children as React.ReactElement, {
               className: combinedClassName,
-              ref: ref as React.Ref<any>, // Forward ref
+              // *** FIX HERE: Use more specific ref type ***
+              ref: ref as React.Ref<HTMLAnchorElement | HTMLButtonElement>,
               ...props,
             })
           ) : (
+            // *** FIX HERE: Use more specific ref type ***
             <a ref={ref as React.Ref<HTMLAnchorElement>} className={combinedClassName} {...props}>
               {children}
             </a>
@@ -55,9 +53,9 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
       );
     }
 
-    // If href is external, use a regular anchor tag
     if (href) {
       return (
+        // *** FIX HERE: Use more specific ref type ***
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}
           href={href}
@@ -71,7 +69,6 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
       );
     }
 
-    // Otherwise, render a standard button
     return (
       <button
         type={type}
@@ -86,6 +83,6 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
   }
 );
 
-Button.displayName = "Button"; // Add display name for DevTools
-
+Button.displayName = "Button";
 export default Button;
+

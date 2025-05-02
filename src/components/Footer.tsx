@@ -1,6 +1,6 @@
 // --- File: src/components/Footer.tsx ---
 import React from 'react';
-import Link from 'next/link'; // Import Link if you add navigation links
+// Removed unused import: import Link from 'next/link';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -12,11 +12,8 @@ const Footer = () => {
             <div className="container mx-auto px-4 text-center text-sm">
                 {/* Optional: Quick Links */}
                 {/* <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 text-gray-300">
-                    <Link href="/services" legacyBehavior><a className="hover:text-white">Services</a></Link>
-                    <Link href="/contact" legacyBehavior><a className="hover:text-white">Contact</a></Link>
-                    <Link href="/faq" legacyBehavior><a className="hover:text-white">FAQ</a></Link>
-                    // Add Privacy Policy / Terms if applicable
-                    // <Link href="/privacy-policy" legacyBehavior><a className="hover:text-white">Privacy Policy</a></Link>
+                    // Use Link component here if uncommenting
+                    // <Link href="/services" legacyBehavior><a className="hover:text-white">Services</a></Link>
                 </div> */}
 
                 {/* Copyright and ABN */}

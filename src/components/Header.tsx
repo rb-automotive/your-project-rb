@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ImageWithFallback from './ImageWithFallback'; // Assuming Image component is in the same folder
 
 // *** REPLACE WITH YOUR ACTUAL LOGO URL ***
-const LOGO_URL = "https://www.clipartkey.com/mpngs/b/198-1980907_yahoo-clip-art.png";
+const LOGO_URL = "/images/RB AUTO LOGO 1.png"; // Using the path you provided
 const BRAND_COLOR = 'red'; // Or load from config/context
 
 const Header = () => {
@@ -18,7 +18,7 @@ const Header = () => {
                     <a className="mr-6 flex items-center space-x-2" aria-label="RB Automotive Homepage">
                         {/* Use ImageWithFallback for the logo */}
                         <ImageWithFallback
-                            src={LOGO_URL}
+                            src={LOGO_URL} // Using the updated URL
                             alt="RB Automotive Logo"
                             className="h-8 w-auto" // Adjust size as needed
                             fallbackText="RB"

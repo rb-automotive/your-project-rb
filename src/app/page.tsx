@@ -1,16 +1,16 @@
 // --- File: src/app/page.tsx (Homepage) ---
 import React from 'react';
 // Import components using RELATIVE paths
-import Button from '@/components/Button';
-import ImageWithFallback from '@/components/ImageWithFallback';
-// Other imports...
+import Button from '../components/Button'; // Using relative path
+import ImageWithFallback from '../components/ImageWithFallback'; // Using relative path
+// Import other components/sections if needed
 
-// --- Constants (remain the same) ---
-const HERO_LOGO_URL = "/images/RB AUTO LOGO 1.png"; // Use your updated logo path
+// --- Constants ---
+const HERO_LOGO_URL = "/images/RB AUTO LOGO 1.png"; // Your logo path
 const PHONE_NUMBER = "0492 992 211";
-const BRAND_COLOR = 'red';
+const BRAND_COLOR = 'red'; // Match Tailwind config
 
-// Icons (remain the same)
+// Example Icons (replace with actual icon components or library like lucide-react)
 const IconCalendarPlus = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 0 0 0 2 2h8"/><path d="M3 10h18"/><path d="M16 19h6"/><path d="M19 16v6"/></svg>;
 const IconPhoneCall = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
 const IconWrench = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>;
@@ -23,7 +23,7 @@ const IconEmergency = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" h
 export default function HomePage() {
   return (
     <>
-      {/* Hero Section (remains the same) */}
+      {/* Hero Section */}
       <section className="relative w-full py-24 md:py-32 lg:py-40 bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
         <div className="container px-4 md:px-6 relative z-10">
@@ -64,7 +64,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Brief Services Overview Section (remains the same) */}
+      {/* Brief Services Overview Section */}
       <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-4 text-center">
               <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-gray-900 font-roboto-slab">Our Core Services</h2>
@@ -96,6 +96,7 @@ export default function HomePage() {
               </div>
           </div>
       </section>
+      {/* Add other homepage sections here */}
     </>
   );
 }

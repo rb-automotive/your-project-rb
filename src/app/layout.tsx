@@ -4,10 +4,10 @@ import { Inter, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 
 // Import shared layout components using RELATIVE paths
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "../components/Header"; // Using relative path
+import Footer from "../components/Footer"; // Using relative path
 
-// Configure fonts (remains the same)
+// Configure fonts
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -20,16 +20,18 @@ const roboto_slab = Roboto_Slab({
   display: 'swap',
 });
 
-// Define base metadata (remains the same)
+// Define base metadata
 export const metadata: Metadata = {
   title: {
     default: "RB Automotive | 24/7 Mobile Mechanic Perth",
     template: "%s | RB Automotive Perth",
   },
   description: "RB Automotive: Perth's trusted 24/7 mobile mechanic. Expert car service, repairs, diagnostics, brakes & more at your location. Book online or call now!",
+  // Add other global metadata like icons, open graph base details etc.
+  // icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
 };
 
-// RootLayout component (remains the same)
+// RootLayout component
 export default function RootLayout({
   children,
 }: Readonly<{

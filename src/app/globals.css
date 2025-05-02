@@ -16,19 +16,17 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
 
-    --border: 214.3 31.8% 91.4%; /* Light Gray Border - Make sure this is defined */
+    --border: 214.3 31.8% 91.4%; /* Light Gray Border - Ensure this is defined */
     --input: 214.3 31.8% 91.4%;
 
     --card: 0 0% 100%; /* Card Background */
     --card-foreground: 222.2 47.4% 11.2%; /* Card Text */
 
     /* Brand Colors (Red - Adjust HSL values for your exact red) */
-    /* Example: hsl(346.8, 77.2%, 49.8%) */
     --primary: 346.8 77.2% 49.8%; /* Red */
     --primary-foreground: 355.7 100% 97.3%; /* White/Very Light Red */
 
     /* Secondary Colors (Dark Gray/Black) */
-    /* Example: hsl(222.2, 47.4%, 11.2%) */
     --secondary: 222.2 47.4% 11.2%;
     --secondary-foreground: 210 40% 98%; /* White */
 
@@ -48,12 +46,12 @@
 
   /* Apply base border color using the CSS variable */
   * {
-    @apply border-border;
+    @apply border-border; /* This uses the --border variable */
   }
 
   /* Apply base styles */
   body {
-    @apply bg-background text-foreground font-inter antialiased;
+    @apply bg-background text-foreground font-inter antialiased; /* This uses --background */
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -68,4 +66,4 @@
   html {
       scroll-behavior: smooth;
   }
-}   
+}

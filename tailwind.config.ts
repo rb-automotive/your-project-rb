@@ -4,20 +4,20 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   content: [
     // Ensure Tailwind scans your components and app directory
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}", // Keep if you might use pages router later
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}", // Important for App Router
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    container: { // Optional: Center container by default and set padding
+    container: {
       center: true,
       padding: {
-        DEFAULT: '1rem', // Default padding
+        DEFAULT: '1rem',
         sm: '2rem',
         lg: '4rem',
         xl: '5rem',
       },
-       screens: { // Optional: Define screen breakpoints if needed
+       screens: {
          sm: '640px',
          md: '768px',
          lg: '1024px',
@@ -25,24 +25,23 @@ const config: Config = {
        },
     },
     extend: {
-      // Define fonts using CSS variables set by next/font in layout.tsx
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'], // Set Inter as default sans-serif
-        slab: ['var(--font-roboto-slab)', 'serif'], // Set Roboto Slab for headings etc.
+        sans: ['var(--font-inter)', 'sans-serif'],
+        slab: ['var(--font-roboto-slab)', 'serif'],
       },
       // Define colors using CSS variables set in globals.css
       colors: {
         border: "hsl(var(--border))", // Correct syntax using CSS variable
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: "hsl(var(--background))", // Correct syntax using CSS variable
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))", // Correct syntax using CSS variable
+          DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))", // Correct syntax using CSS variable
+          DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -65,30 +64,21 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // You can still add direct color definitions if needed
-        // Example: Keep the direct red definition for easier class usage like 'bg-red-600'
+        // Keep direct color definitions for convenience if needed
          red: {
            100: '#fee2e2',
-           // ... other shades if needed
            500: '#ef4444',
-           600: '#dc2626', // Used as BRAND_COLOR in components
+           600: '#dc2626',
            700: '#b91c1c',
-           // ...
          },
       },
-      // Define border radius using the CSS variable
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      // Add keyframes for animations if needed later
-      // keyframes: { ... },
-      // animation: { ... },
     },
   },
-  plugins: [
-      // Add any Tailwind plugins here if needed, e.g., require('@tailwindcss/forms')
-  ],
+  plugins: [],
 };
 export default config;

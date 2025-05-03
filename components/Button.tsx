@@ -1,4 +1,4 @@
-// --- File: components/Button.tsx (Simplified - Removed asChild) ---
+// --- File: components/Button.tsx (Final Fix) ---
 import React from 'react';
 import Link from 'next/link';
 
@@ -6,21 +6,38 @@ import Link from 'next/link';
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
 // Define Button Props (Removed asChild)
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+// Use intersection type for props to include common attributes + button/anchor specifics
+type ButtonBaseProps = {
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
   size?: 'default' | 'sm' | 'lg';
   className?: string;
   href?: string; // For link buttons
-}
+};
+
+// Combine base props with standard button or anchor attributes, excluding conflicting ones if needed
+type ButtonProps = ButtonBaseProps & Omit<React.ButtonHTMLAttributes<HTMLButtonElement> & React.AnchorHTMLAttributes<HTMLAnchorElement>, 'type'> & {
+    type?: 'button' | 'submit' | 'reset'; // Override type for button specifically
+};
+
 
 // Define the type for the forwarded ref more broadly
 type Ref = HTMLButtonElement | HTMLAnchorElement;
 
 const Button = React.forwardRef<Ref, ButtonProps>(
-  ({ children, onClick, variant = 'primary', size = 'default', className = '', href, type = 'button', ...props }, ref) => {
+  ({
+    children,
+    variant = 'primary',
+    size = 'default',
+    className = '',
+    href,
+    // Destructure button-specific props that might conflict with anchor props
+    onClick,
+    type = 'button', // Default to 'button' if not specified
+    // Capture the rest of the props which might be common or anchor-specific
+    ...props
+   }, ref) => {
 
-    // Using standard Tailwind classes directly now
     const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white whitespace-nowrap";
 
     const variants = {
@@ -43,6 +60,7 @@ const Button = React.forwardRef<Ref, ButtonProps>(
     if (href && href.startsWith('/')) {
       return (
         <Link href={href} passHref legacyBehavior>
+            {/* Spread only props valid for <a>, excluding onClick if it came from ButtonHTMLAttributes */}
             <a ref={ref as React.Ref<HTMLAnchorElement>} className={combinedClassName} {...props}>
               {children}
             </a>
@@ -53,13 +71,14 @@ const Button = React.forwardRef<Ref, ButtonProps>(
     // Render 'a' tag for external links
     if (href) {
         return (
+            // Spread only props valid for <a>
             <a
               ref={ref as React.Ref<HTMLAnchorElement>}
               href={href}
               className={combinedClassName}
               target={props.target || '_blank'}
               rel={props.rel || 'noopener noreferrer'}
-              {...props}
+              {...props} // Spread remaining props (should be valid for <a>)
             >
               {children}
             </a>
@@ -69,11 +88,11 @@ const Button = React.forwardRef<Ref, ButtonProps>(
     // Render standard button
     return (
       <button
-        type={type}
+        type={type} // Use the explicitly passed or default 'button' type
         className={combinedClassName}
         ref={ref as React.Ref<HTMLButtonElement>}
-        onClick={onClick}
-        {...props}
+        onClick={onClick} // Use the onClick specific to button
+        {...props} // Spread remaining props (should be valid for <button>)
       >
         {children}
       </button>

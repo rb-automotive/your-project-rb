@@ -1,25 +1,24 @@
-// --- File: components/Button.tsx ---
+// --- File: components/Button.tsx (Simplified - Removed asChild) ---
 import React from 'react';
 import Link from 'next/link';
 
 // Helper function to combine class names
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
-// Define Button Props
+// Define Button Props (Removed asChild)
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
   size?: 'default' | 'sm' | 'lg';
   className?: string;
-  href?: string;
-  asChild?: boolean;
+  href?: string; // For link buttons
 }
 
 // Define the type for the forwarded ref more broadly
 type Ref = HTMLButtonElement | HTMLAnchorElement;
 
 const Button = React.forwardRef<Ref, ButtonProps>(
-  ({ children, onClick, variant = 'primary', size = 'default', className = '', href, type = 'button', asChild = false, ...props }, ref) => {
+  ({ children, onClick, variant = 'primary', size = 'default', className = '', href, type = 'button', ...props }, ref) => {
 
     const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white whitespace-nowrap";
 
@@ -39,23 +38,7 @@ const Button = React.forwardRef<Ref, ButtonProps>(
 
     const combinedClassName = cn(baseStyle, variants[variant], sizes[size], className);
 
-    // If asChild is true, clone the child and merge *only* the other props
-    if (asChild) {
-      if (React.isValidElement(children)) {
-        // Pass ref and other props, but NOT className directly here
-        // Rely on the child component to handle className passed via ...props if needed
-        // Or expect the user to apply necessary classes to the child manually
-        return React.cloneElement(children as React.ReactElement<any>, {
-          ref: ref,
-          ...props,
-          // className: cn(children.props?.className, combinedClassName), // <-- Removed explicit className merge
-        });
-      }
-      console.error("Button 'asChild' prop requires a single valid React element child.");
-      return null;
-    }
-
-    // Handle internal links (when asChild is false)
+    // Handle internal links
     if (href && href.startsWith('/')) {
       return (
         <Link href={href} passHref legacyBehavior>
@@ -66,7 +49,7 @@ const Button = React.forwardRef<Ref, ButtonProps>(
       );
     }
 
-    // Render 'a' tag for external links (when asChild is false)
+    // Render 'a' tag for external links
     if (href) {
         return (
             <a
@@ -82,7 +65,7 @@ const Button = React.forwardRef<Ref, ButtonProps>(
         );
     }
 
-    // Render standard button (when asChild is false and no href)
+    // Render standard button
     return (
       <button
         type={type}

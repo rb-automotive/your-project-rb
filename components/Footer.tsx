@@ -1,4 +1,4 @@
-// --- File: src/components/Footer.tsx ---
+// --- File: components/Footer.tsx ---
 import React from 'react';
 // Removed unused import: import Link from 'next/link';
 
@@ -8,7 +8,8 @@ const Footer = () => {
     const ABN = "[Your ABN Here - Optional but Recommended]";
 
     return (
-        <footer className="bg-gray-900 text-gray-400 py-8 border-t border-border/10">
+        // Uses Tailwind classes relying on variables in styles/globals.css
+        <footer className="bg-secondary text-secondary-foreground py-8 border-t border-border/10"> {/* Use secondary color */}
             <div className="container mx-auto px-4 text-center text-sm">
                 {/* Optional: Quick Links */}
                 {/* <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 text-gray-300">

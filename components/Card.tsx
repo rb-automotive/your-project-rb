@@ -1,4 +1,4 @@
-// --- File: src/components/Card.tsx ---
+// --- File: components/Card.tsx ---
 import React from 'react';
 
 // Helper function to combine class names (optional, but useful)
@@ -16,9 +16,10 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    // Uses Tailwind classes relying on variables in styles/globals.css
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md", // Base styles
-      className // Allow merging custom classes
+      "rounded-lg border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md",
+      className
     )}
     {...props}
   />
@@ -31,20 +32,21 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)} // Padding and spacing for header
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
     {...props}
   />
 ));
 CardHeader.displayName = "CardHeader";
 
 const CardTitle = React.forwardRef<
-  HTMLParagraphElement, // Changed to paragraph element semantically
+  HTMLParagraphElement, // Use h3 semantically
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <h3 // Use h3 for semantic title within card
+  <h3
     ref={ref}
+    // Uses font-slab defined in tailwind.config.js
     className={cn(
-      "text-lg font-semibold leading-none tracking-tight font-roboto-slab", // Title styles
+      "text-lg font-semibold leading-none tracking-tight font-slab",
       className
     )}
     {...props}
@@ -58,7 +60,8 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)} // Styles for description text
+    // Uses text-muted-foreground color from globals.css via tailwind.config.js
+    className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
 ));
@@ -70,7 +73,7 @@ const CardContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("p-6 pt-0", className)} // Padding for content area (no top padding)
+    className={cn("p-6 pt-0", className)} // No top padding for content following header
     {...props}
   />
 ));
@@ -82,7 +85,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)} // Padding for footer (no top padding)
+    className={cn("flex items-center p-6 pt-0", className)} // No top padding for footer following content
     {...props}
   />
 ));
@@ -90,12 +93,11 @@ CardFooter.displayName = "CardFooter";
 
 // --- Enhanced Service Card Component (Uses Base Card Components) ---
 
-// Import necessary components (assuming they are in the same directory or adjust path)
+// Import necessary components from the same directory
 import ImageWithFallback from './ImageWithFallback';
 import Button from './Button';
-// Define or import IconCheck component
-const IconCheck = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><polyline points="20 6 9 17 4 12"/></svg>;
-
+// Import specific icon component needed
+import { IconCheck } from './Icons'; // Assuming Icons.tsx is in the same components folder
 
 // Define props for the enhanced service card
 interface ServiceCardEnhancedProps {
@@ -143,7 +145,8 @@ const ServiceCardEnhanced = ({
                 <ul className="list-none pl-0 space-y-1.5 text-sm text-gray-700 mb-4">
                     {listItems.map((item, index) => (
                         <li key={index} className="flex items-start">
-                            <IconCheck className={`text-${BRAND_COLOR}-500 mr-2 mt-1 flex-shrink-0`} />
+                            {/* Use IconCheck component */}
+                            <IconCheck className={`text-${BRAND_COLOR}-500 mr-2 mt-1 flex-shrink-0 h-4 w-4`} />
                             <span>{item}</span>
                         </li>
                     ))}
@@ -153,6 +156,7 @@ const ServiceCardEnhanced = ({
             {/* Footer/Button Area */}
              {buttonText && buttonLink && (
                 <div className="mt-auto pt-4"> {/* Pushes button to bottom */}
+                     {/* Use Button component */}
                      <Button href={buttonLink} variant="secondary" size="sm">
                          {buttonText}
                      </Button>
@@ -163,5 +167,5 @@ const ServiceCardEnhanced = ({
   );
 };
 
-// Export all components
+// Export all components defined in this file
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, ServiceCardEnhanced };

@@ -38,8 +38,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     const combinedClassName = cn(baseStyle, variants[variant], sizes[size], className);
 
-    // Determine the component type: 'a' if href, otherwise 'button'
-    const Comp = asChild ? 'span' : (href ? 'a' : 'button'); // Use span as wrapper if asChild
+    // *** REMOVED UNUSED const Comp = ... line ***
 
     // Handle internal links with Next.js Link
     if (href && href.startsWith('/')) {

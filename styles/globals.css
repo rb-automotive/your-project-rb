@@ -8,7 +8,6 @@
   body {
     /* Use standard Tailwind classes */
     @apply bg-white text-gray-900 font-sans antialiased;
-    /* font-feature-settings: "rlig" 1, "calt" 1; */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -22,4 +21,3 @@
       scroll-behavior: smooth;
   }
 }
-

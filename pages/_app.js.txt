@@ -1,33 +1,27 @@
-    // --- File: pages/_app.tsx ---
-    import type { AppProps } from 'next/app';
-    import '../styles/globals.css'; // Import global styles from styles folder
-    import Header from '../components/Header'; // Relative path from pages/ to components/
-    import Footer from '../components/Footer'; // Relative path from pages/ to components/
+// --- File: pages/_app.tsx ---
+import type { AppProps } from 'next/app';
+import '../styles/globals.css'; // Import global styles
+import Header from '../components/Header'; // Relative path
+import Footer from '../components/Footer'; // Relative path
 
-    // Import Fonts - ensure these are loaded (e.g., via a <link> tag in _document.js or here)
-    // If using next/font, you'd typically do it here or in _document.js
-    // Example (if not using next/font directly in layout):
-    // import Head from 'next/head';
+// Import Fonts (if not using _document.js)
+import { Inter, Roboto_Slab } from 'next/font/google';
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' }); // Define CSS variable
+const roboto_slab = Roboto_Slab({ subsets: ['latin'], weight: '700', variable: '--font-roboto-slab' }); // Define CSS variable
 
-    function MyApp({ Component, pageProps }: AppProps) {
-      return (
-        <>
-          {/* Example: Add font links directly if not using next/font */}
-          {/* <Head>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet" />
-          </Head> */}
-          <div className="flex flex-col min-h-screen font-inter"> {/* Apply base font */}
-            <Header />
-            <main className="flex-grow">
-              <Component {...pageProps} /> {/* Render the current page */}
-            </main>
-            <Footer />
-          </div>
-        </>
-      );
-    }
 
-    export default MyApp;
-    
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    // Apply font variables to the main div
+    // Using font-sans which should map to Inter via tailwind.config.js
+    <div className={`${inter.variable} ${roboto_slab.variable} flex flex-col min-h-screen font-sans`}>
+      <Header />
+      <main className="flex-grow">
+        <Component {...pageProps} /> {/* Render the current page */}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default MyApp;

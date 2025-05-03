@@ -1,61 +1,43 @@
-// --- File: components/ImageWithFallback.tsx ---
-"use client"; // Mark as a Client Component because it uses Hooks
+// --- File: components/ImageWithFallback.tsx (Simplified - No Hooks) ---
+import React from 'react';
 
-import React, { useState, useEffect } from 'react';
-
-// Define the props the component accepts
-interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  // src and alt are required img attributes
+// Basic props for a standard image
+interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
-  // Optional props for customization
-  fallbackText?: string; // Text for the placeholder image
-  width?: number; // Optional width hint for placeholder generation
-  height?: number; // Optional height hint for placeholder generation
-  className?: string; // Allow passing custom classes
+  className?: string;
 }
 
+// This is now a simple Server Component
 const ImageWithFallback = ({
   src,
   alt,
-  fallbackText = "Image", // Default placeholder text
-  width = 600, // Default placeholder width
-  height = 400, // Default placeholder height
   className = '',
-  ...props // Pass down any other standard img attributes (like style, etc.)
-}: ImageWithFallbackProps) => {
-    // State to hold the current image source (original or fallback)
-    const [imgSrc, setImgSrc] = useState(src);
-    // Generate the placeholder URL using placehold.co
-    const placeholderUrl = `https://placehold.co/${width}x${height}/e0e0e0/a0a0a0?text=${fallbackText.replace(/\s+/g, '+')}`;
+  ...props
+}: ImageProps) => {
 
-    // Effect to reset the image source if the `src` prop changes
-    useEffect(() => {
-        setImgSrc(src);
-    }, [src]); // Re-run effect only if the src prop changes
-
-    // Function to handle image loading errors
-    const handleError = () => {
-        // Check if the current source is already the placeholder to prevent infinite loops
-        if (imgSrc !== placeholderUrl) {
-            console.warn(`Image failed to load: ${src}. Using placeholder.`);
-            setImgSrc(placeholderUrl); // Set the source to the placeholder URL
-        }
+    // Simple error handling using onerror attribute in JSX
+    const handleError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+        console.warn(`Image failed to load: ${src}. Hiding element or applying placeholder style.`);
+        // Option 1: Hide the image (or apply a placeholder class)
+        // event.currentTarget.style.display = 'none';
+        // Option 2: Set to a transparent pixel (less ideal)
+        // event.currentTarget.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+        // Option 3: Set to a generic placeholder URL (if you have one)
+        const placeholderUrl = `https://placehold.co/${props.width || 300}x${props.height || 200}/e0e0e0/a0a0a0?text=Error`;
+        event.currentTarget.src = placeholderUrl;
     };
 
-    // Render the standard HTML <img> element
     return (
         <img
-            src={imgSrc} // Use the state variable for the source
+            src={src}
             alt={alt}
-            className={className} // Apply any passed classes
-            loading="lazy" // Enable native browser lazy loading
-            onError={handleError} // Call handleError function if the image fails to load
-            {...props} // Pass down any other img attributes (like style, width/height if set directly)
+            className={className}
+            loading="lazy"
+            onError={handleError} // Basic browser error handling
+            {...props}
         />
     );
 };
 
-// Export the component for use in other files
 export default ImageWithFallback;
-

@@ -18,9 +18,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ children, onClick, variant = 'primary', size = 'default', className = '', href, type = 'button', asChild = false, ...props }, ref) => {
 
-    const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white whitespace-nowrap"; // Adjusted ring color/offset
+    const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white whitespace-nowrap";
 
-    // Define styles for different variants using standard Tailwind classes
     const variants = {
         primary: `bg-red-600 text-white hover:bg-red-700/90`,
         secondary: `bg-gray-700 text-white hover:bg-gray-800/90`,
@@ -29,7 +28,6 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
         link: `text-red-600 underline-offset-4 hover:underline`,
     };
 
-    // Define styles for different sizes
     const sizes = {
         default: "h-10 py-2 px-4",
         sm: "h-9 px-3 rounded-md",
@@ -38,29 +36,32 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     const combinedClassName = cn(baseStyle, variants[variant], sizes[size], className);
 
-    // Handle internal links with Next.js Link
+    // If asChild is true, clone the child and merge props
+    if (asChild) {
+        // Ensure children is a single valid React element
+        if (React.isValidElement(children)) {
+            // Clone the child element, merging the combined class name and other props
+            // Pass the ref to the cloned element
+            return React.cloneElement(children, {
+                ref: ref, // Pass the ref down
+                className: cn(children.props.className, combinedClassName), // Merge classes
+                ...props // Spread remaining props
+            });
+        }
+        // If children is not a valid element when asChild is true, return null or throw an error
+        console.error("Button component expects a single React element as a child when asChild is true.");
+        return null;
+    }
+
+    // Handle internal links with Next.js Link (when asChild is false)
     if (href && href.startsWith('/')) {
       return (
-        <Link href={href} passHref legacyBehavior={asChild}>
-          {/* If asChild, render the child directly, assuming it accepts props */}
-          {asChild ? (
-             // Check if children is a valid React element before cloning
-             React.isValidElement(children) ? React.cloneElement(children, { ref, className: cn(children.props.className, combinedClassName), ...props }) : null
-          ) : (
-            // Render standard anchor tag if not asChild
+        <Link href={href} passHref legacyBehavior>
             <a ref={ref as React.Ref<HTMLAnchorElement>} className={combinedClassName} {...props}>
               {children}
             </a>
-          )}
         </Link>
       );
-    }
-
-    // Handle external links or regular buttons when asChild is true
-    if (asChild) {
-        // If asChild is true but it's not an internal link, render the child directly
-        // It's up to the child component to handle the props correctly
-         return React.isValidElement(children) ? React.cloneElement(children, { ref, className: cn(children.props.className, combinedClassName), ...props }) : null;
     }
 
     // Render 'a' tag for external links (when asChild is false)
@@ -70,7 +71,6 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
               ref={ref as React.Ref<HTMLAnchorElement>}
               href={href}
               className={combinedClassName}
-              // Add target blank for external links unless specified otherwise
               target={props.target || '_blank'}
               rel={props.rel || 'noopener noreferrer'}
               {...props}

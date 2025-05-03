@@ -1,11 +1,15 @@
-// --- File: tailwind.config.ts (Simplified) ---
-import type { Config } from "tailwindcss";
+// --- File: tailwind.config.js (or .ts) ---
+/** @type {import('tailwindcss').Config} */
 
-const config: Config = {
+// If using TypeScript, add: import type { Config } from "tailwindcss";
+// const config: Config = { ... }
+
+module.exports = { // Or export default config; if using TS
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    // Correct paths for Pages Router structure
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    // Remove "./src/app/..." if it exists
   ],
   theme: {
     container: {
@@ -24,24 +28,47 @@ const config: Config = {
        },
     },
     extend: {
-      // Keep font definitions using CSS variables
+      // Keep font definitions (assuming fonts are loaded in _document.js or globals.css)
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
-        slab: ['var(--font-roboto-slab)', 'serif'],
+        // If using CSS variables:
+        // sans: ['var(--font-inter)', 'sans-serif'],
+        // slab: ['var(--font-roboto-slab)', 'serif'],
+        // If loading fonts directly:
+         inter: ['Inter', 'sans-serif'],
+         'roboto-slab': ['"Roboto Slab"', 'serif'],
       },
-      // Keep direct red color definitions for convenience
-       colors: {
-         red: {
+      // Keep color definitions (using direct names or CSS variables if defined in globals.css)
+      colors: {
+        // Option 1: Using CSS Variables (if defined in globals.css)
+        border: "hsl(var(--border))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        // ... other variable colors ...
+
+        // Option 2: Using direct Tailwind names + your brand color
+        red: {
            100: '#fee2e2',
            500: '#ef4444',
-           600: '#dc2626', // Used as BRAND_COLOR in components
+           600: '#dc2626',
            700: '#b91c1c',
          },
-       },
-       // Removed colors section using CSS variables
-       // Removed borderRadius section using CSS variables
+      },
+      borderRadius: {
+        // Option 1: Using CSS Variable
+        // lg: "var(--radius)",
+        // md: "calc(var(--radius) - 2px)",
+        // sm: "calc(var(--radius) - 4px)",
+        // Option 2: Using Tailwind defaults (usually sufficient)
+      },
     },
   },
   plugins: [],
 };
-export default config;

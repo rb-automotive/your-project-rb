@@ -3,48 +3,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Define CSS Variables for Theming */
+/* Apply base styles */
 @layer base {
-  :root {
-    /* Light Mode Colors */
-    --background: 0 0% 100%; /* White */
-    --foreground: 222.2 47.4% 11.2%; /* Dark Gray */
-    --muted: 210 40% 96.1%; /* Light Gray */
-    --muted-foreground: 215.4 16.3% 46.9%; /* Medium Gray */
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%; /* Light Gray Border */
-    --input: 214.3 31.8% 91.4%;
-    --card: 0 0% 100%; /* Card Background */
-    --card-foreground: 222.2 47.4% 11.2%; /* Card Text */
-    /* Brand Colors (Red) */
-    --primary: 346.8 77.2% 49.8%; /* Red */
-    --primary-foreground: 355.7 100% 97.3%; /* White/Very Light Red */
-    /* Secondary Colors (Dark Gray/Black) */
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%; /* White */
-    --accent: 210 40% 96.1%; /* Light Gray Accent */
-    --accent-foreground: 222.2 47.4% 11.2%; /* Dark Text on Accent */
-    --destructive: 0 84.2% 60.2%; /* Brighter Red */
-    --destructive-foreground: 210 40% 98%; /* White Text */
-    --ring: 215 20.2% 65.1%; /* Focus Ring Color */
-    --radius: 0.5rem; /* Base Border Radius */
-  }
-
-  /* Apply base styles */
-  * {
-    @apply border-border; /* Uses the --border variable */
-  }
   body {
-    @apply bg-background text-foreground font-inter antialiased; /* Uses CSS variables */
-    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Use standard Tailwind classes */
+    @apply bg-white text-gray-900 font-sans antialiased;
+    /* font-feature-settings: "rlig" 1, "calt" 1; */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Apply heading font */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-slab font-bold; /* Use font-slab defined in tailwind.config */
+    @apply font-slab font-bold;
   }
+
   html {
       scroll-behavior: smooth;
   }
 }
+

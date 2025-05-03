@@ -1,19 +1,19 @@
 // --- File: pages/_app.tsx ---
 import type { AppProps } from 'next/app';
 import '../styles/globals.css'; // Import global styles
-import Header from '../components/Header'; // Relative path from pages/ to components/
-import Footer from '../components/Footer'; // Relative path from pages/ to components/
+import Header from '../components/Header'; // Relative path
+import Footer from '../components/Footer'; // Relative path
 
-// Import Fonts (if not using _document.js) - Alternatively load in globals.css or _document.js
-// import { Inter, Roboto_Slab } from 'next/font/google';
-// const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-// const roboto_slab = Roboto_Slab({ subsets: ['latin'], weight: '700', variable: '--font-roboto-slab' });
+// Load fonts directly here or in _document.js - ensure they are loaded
+import { Inter, Roboto_Slab } from 'next/font/google';
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' }); // Define CSS variable
+const roboto_slab = Roboto_Slab({ subsets: ['latin'], weight: '700', variable: '--font-roboto-slab' }); // Define CSS variable
+
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    // Optional: Add font variables to the wrapper div if using next/font here
-    // <div className={`${inter.variable} ${roboto_slab.variable} flex flex-col min-h-screen`}>
-    <div className="flex flex-col min-h-screen font-sans"> {/* Apply base font */}
+    // Apply font variables to the main div
+    <div className={`${inter.variable} ${roboto_slab.variable} flex flex-col min-h-screen font-sans`}>
       <Header />
       <main className="flex-grow">
         <Component {...pageProps} /> {/* Render the current page */}

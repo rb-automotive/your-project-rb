@@ -3,12 +3,12 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    // Scan files in pages and components directories (NOT src/)
+    // Scan files in pages and components directories
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    container: {
+    container: { // Optional: Center container by default and set padding
       center: true,
       padding: {
         DEFAULT: '1rem',
@@ -24,59 +24,20 @@ const config: Config = {
        },
     },
     extend: {
+      // Define fonts (assuming they are loaded elsewhere)
       fontFamily: {
-        // Assumes fonts are loaded via _document.js or globals.css link
-        sans: ['Inter', 'sans-serif'], // Use direct font name
-        slab: ['"Roboto Slab"', 'serif'], // Use direct font name
+        sans: ['Inter', 'sans-serif'], // Default sans-serif
+        slab: ['"Roboto Slab"', 'serif'], // Font for headings
       },
-      // Define colors using CSS variables (ensure these are in styles/globals.css)
+      // Add direct color definitions if needed
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-         // Keep direct red definition for convenience
-         red: {
+         red: { // Keep brand color for direct use
            100: '#fee2e2',
            500: '#ef4444',
            600: '#dc2626',
            700: '#b91c1c',
          },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
+       },
     },
   },
   plugins: [],

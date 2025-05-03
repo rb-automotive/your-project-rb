@@ -15,7 +15,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+// Define the type for the forwarded ref more broadly
+type Ref = HTMLButtonElement | HTMLAnchorElement;
+
+const Button = React.forwardRef<Ref, ButtonProps>(
   ({ children, onClick, variant = 'primary', size = 'default', className = '', href, type = 'button', asChild = false, ...props }, ref) => {
 
     const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white whitespace-nowrap";
@@ -36,15 +39,13 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     const combinedClassName = cn(baseStyle, variants[variant], sizes[size], className);
 
-    // If asChild is true, render the child directly and merge props
+    // If asChild is true, clone the child and merge props
     if (asChild) {
-      // Ensure children is a single valid React element
       if (React.isValidElement(children)) {
         // Clone the element, merging className and passing down ref and other props
-        // Explicitly cast the ref type here which might help TypeScript
-        const childRef = ref as React.Ref<any>;
+        // Let TypeScript infer the ref type here, rely on the forwardRef definition
         return React.cloneElement(children, {
-          ref: childRef,
+          ref: ref, // Pass the ref directly
           className: cn(children.props.className, combinedClassName),
           ...props,
         });

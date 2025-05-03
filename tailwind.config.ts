@@ -1,15 +1,11 @@
-// --- File: tailwind.config.js (or .ts) ---
-/** @type {import('tailwindcss').Config} */
+// --- File: tailwind.config.ts ---
+import type { Config } from "tailwindcss";
 
-// If using TypeScript, add: import type { Config } from "tailwindcss";
-// const config: Config = { ... }
-
-module.exports = { // Or export default config; if using TS
+const config: Config = {
   content: [
-    // Correct paths for Pages Router structure
+    // Scan files in pages and components directories (NOT src/)
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    // Remove "./src/app/..." if it exists
   ],
   theme: {
     container: {
@@ -28,19 +24,16 @@ module.exports = { // Or export default config; if using TS
        },
     },
     extend: {
-      // Keep font definitions (assuming fonts are loaded in _document.js or globals.css)
       fontFamily: {
-        // If using CSS variables:
-        // sans: ['var(--font-inter)', 'sans-serif'],
-        // slab: ['var(--font-roboto-slab)', 'serif'],
-        // If loading fonts directly:
-         inter: ['Inter', 'sans-serif'],
-         'roboto-slab': ['"Roboto Slab"', 'serif'],
+        // Assumes fonts are loaded via _document.js or globals.css link
+        sans: ['Inter', 'sans-serif'], // Use direct font name
+        slab: ['"Roboto Slab"', 'serif'], // Use direct font name
       },
-      // Keep color definitions (using direct names or CSS variables if defined in globals.css)
+      // Define colors using CSS variables (ensure these are in styles/globals.css)
       colors: {
-        // Option 1: Using CSS Variables (if defined in globals.css)
         border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -51,10 +44,28 @@ module.exports = { // Or export default config; if using TS
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        // ... other variable colors ...
-
-        // Option 2: Using direct Tailwind names + your brand color
-        red: {
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+         // Keep direct red definition for convenience
+         red: {
            100: '#fee2e2',
            500: '#ef4444',
            600: '#dc2626',
@@ -62,13 +73,12 @@ module.exports = { // Or export default config; if using TS
          },
       },
       borderRadius: {
-        // Option 1: Using CSS Variable
-        // lg: "var(--radius)",
-        // md: "calc(var(--radius) - 2px)",
-        // sm: "calc(var(--radius) - 4px)",
-        // Option 2: Using Tailwind defaults (usually sufficient)
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },
   plugins: [],
 };
+export default config;

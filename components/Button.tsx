@@ -38,16 +38,16 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     const combinedClassName = cn(baseStyle, variants[variant], sizes[size], className);
 
-    // *** REMOVED UNUSED const Comp = ... line ***
-
     // Handle internal links with Next.js Link
     if (href && href.startsWith('/')) {
       return (
         <Link href={href} passHref legacyBehavior={asChild}>
           {/* If asChild, render the child directly, assuming it accepts props */}
           {asChild ? (
+             // Check if children is a valid React element before cloning
              React.isValidElement(children) ? React.cloneElement(children, { ref, className: cn(children.props.className, combinedClassName), ...props }) : null
           ) : (
+            // Render standard anchor tag if not asChild
             <a ref={ref as React.Ref<HTMLAnchorElement>} className={combinedClassName} {...props}>
               {children}
             </a>
@@ -56,14 +56,14 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
       );
     }
 
-    // Handle external links or regular buttons
+    // Handle external links or regular buttons when asChild is true
     if (asChild) {
         // If asChild is true but it's not an internal link, render the child directly
         // It's up to the child component to handle the props correctly
          return React.isValidElement(children) ? React.cloneElement(children, { ref, className: cn(children.props.className, combinedClassName), ...props }) : null;
     }
 
-    // Render 'a' tag for external links
+    // Render 'a' tag for external links (when asChild is false)
     if (href) {
         return (
             <a
@@ -80,7 +80,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
         );
     }
 
-    // Render standard button
+    // Render standard button (when asChild is false and no href)
     return (
       <button
         type={type}

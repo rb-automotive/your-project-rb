@@ -14,19 +14,17 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ children, onClick, variant = 'primary', size = 'default', className = '', href, type = 'button', asChild = false, ...props }, ref) => {
-    const BRAND_COLOR = 'red'; // Define brand color centrally if possible
-    // Base styles using Tailwind classes - relies on globals.css and tailwind.config.js
+    // const BRAND_COLOR = 'red'; // *** REMOVED THIS LINE ***
     const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background whitespace-nowrap";
 
-    // Define styles for different variants
-    // These classes use the CSS variables defined in styles/globals.css
-    // and configured in tailwind.config.js
+    // Define styles for different variants using standard Tailwind classes or direct definitions
+    // Adjust these classes if you are not using the CSS variable setup from globals.css
     const variants = {
-        primary: `bg-primary text-primary-foreground hover:bg-primary/90`, // Uses --primary variables
-        secondary: `bg-secondary text-secondary-foreground hover:bg-secondary/90`, // Uses --secondary variables
-        outline: `border border-primary bg-transparent hover:bg-accent hover:text-accent-foreground text-primary`,
-        ghost: `hover:bg-accent hover:text-accent-foreground text-primary`,
-        link: `text-primary underline-offset-4 hover:underline`,
+        primary: `bg-red-600 text-white hover:bg-red-700/90`, // Direct Tailwind color
+        secondary: `bg-gray-700 text-white hover:bg-gray-800/90`, // Direct Tailwind color
+        outline: `border border-red-500 bg-transparent hover:bg-red-100/50 text-red-600`, // Direct Tailwind color
+        ghost: `hover:bg-red-100/50 hover:text-red-700 text-red-600`, // Direct Tailwind color
+        link: `text-red-600 underline-offset-4 hover:underline`, // Direct Tailwind color
     };
 
     // Define styles for different sizes
@@ -40,13 +38,12 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     // If href is provided for internal navigation, use Next.js Link
     if (href && href.startsWith('/')) {
-      // Use legacyBehavior={asChild} to pass props down correctly if wrapping another component
       return (
         <Link href={href} passHref legacyBehavior={asChild}>
           {asChild ? (
             React.cloneElement(children as React.ReactElement, {
               className: combinedClassName,
-              ref: ref as React.Ref<HTMLAnchorElement | HTMLButtonElement>, // Specific ref type
+              ref: ref as React.Ref<HTMLAnchorElement | HTMLButtonElement>,
               ...props,
             })
           ) : (

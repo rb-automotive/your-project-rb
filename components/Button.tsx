@@ -1,8 +1,8 @@
 // --- File: components/Button.tsx ---
 import React from 'react';
-import Link from 'next/link'; // Import Next.js Link
+import Link from 'next/link';
 
-// Helper function to combine class names (optional, but useful)
+// Helper function to combine class names
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
 // Define Button Props
@@ -11,8 +11,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
   size?: 'default' | 'sm' | 'lg';
   className?: string;
-  href?: string; // For link buttons
-  asChild?: boolean; // For wrapping custom components with Link styles
+  href?: string;
+  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
@@ -36,24 +36,24 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     const combinedClassName = cn(baseStyle, variants[variant], sizes[size], className);
 
-    // If asChild is true, clone the child and merge props
+    // If asChild is true, render the child directly and merge props
     if (asChild) {
-        // Ensure children is a single valid React element
-        if (React.isValidElement(children)) {
-            // Clone the child element, merging the combined class name and other props
-            // Pass the ref to the cloned element
-            return React.cloneElement(children, {
-                ref: ref, // Pass the ref down
-                className: cn(children.props.className, combinedClassName), // Merge classes
-                ...props // Spread remaining props
-            });
-        }
-        // If children is not a valid element when asChild is true, return null or throw an error
-        console.error("Button component expects a single React element as a child when asChild is true.");
-        return null;
+      // Ensure children is a single valid React element
+      if (React.isValidElement(children)) {
+        // Clone the element, merging className and passing down ref and other props
+        // Explicitly cast the ref type here which might help TypeScript
+        const childRef = ref as React.Ref<any>;
+        return React.cloneElement(children, {
+          ref: childRef,
+          className: cn(children.props.className, combinedClassName),
+          ...props,
+        });
+      }
+      console.error("Button 'asChild' prop requires a single valid React element child.");
+      return null;
     }
 
-    // Handle internal links with Next.js Link (when asChild is false)
+    // Handle internal links (when asChild is false)
     if (href && href.startsWith('/')) {
       return (
         <Link href={href} passHref legacyBehavior>

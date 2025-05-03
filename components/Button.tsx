@@ -39,21 +39,17 @@ const Button = React.forwardRef<Ref, ButtonProps>(
 
     const combinedClassName = cn(baseStyle, variants[variant], sizes[size], className);
 
-    // If asChild is true, clone the child and merge props
+    // If asChild is true, clone the child and merge *only* the other props
     if (asChild) {
       if (React.isValidElement(children)) {
-        // Clone the element, merging className and other props.
-        // Let forwardRef handle passing the ref implicitly.
-        // Remove explicit ref from the props being cloned.
-        const childProps = {
-            ...props, // Spread other props passed to Button first
-            ...(children.props || {}), // Spread original props from the child safely
-            className: cn(children.props?.className, combinedClassName), // Safely merge classes
-            // ref: ref, // <-- REMOVED explicit ref passing here
-        };
-        // Clone the element with the merged props
-        // We still need the type assertion for children
-        return React.cloneElement(children as React.ReactElement<any>, childProps);
+        // Pass ref and other props, but NOT className directly here
+        // Rely on the child component to handle className passed via ...props if needed
+        // Or expect the user to apply necessary classes to the child manually
+        return React.cloneElement(children as React.ReactElement<any>, {
+          ref: ref,
+          ...props,
+          // className: cn(children.props?.className, combinedClassName), // <-- Removed explicit className merge
+        });
       }
       console.error("Button 'asChild' prop requires a single valid React element child.");
       return null;
